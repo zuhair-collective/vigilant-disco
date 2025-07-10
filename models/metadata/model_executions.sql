@@ -18,18 +18,18 @@ with model_executions as (
     '{{ invocation_id }}' as invocation_id,
     '{{ run_started_at }}' as run_started_at,
     
-    -- Model information (using safe references)
-    '{{ this.name if this.name else "unknown" }}' as model_name,
-    '{{ this.schema if this.schema else "unknown" }}' as model_schema,
-    '{{ this.database if this.database else "unknown" }}' as model_database,
-    '{{ this.resource_type if this.resource_type else "model" }}' as resource_type,
-    '{{ this.path if this.path else "unknown" }}' as model_path,
+    -- Model information (simplified for now)
+    'unknown' as model_name,
+    'unknown' as model_schema,
+    'unknown' as model_database,
+    'model' as resource_type,
+    'unknown' as model_path,
     
-    -- Execution details (using safe references)
-    '{{ this.config.materialized if this.config and this.config.materialized else "table" }}' as materialization_type,
+    -- Execution details (simplified)
+    'table' as materialization_type,
     '{{ target.name }}' as target_name,
     '{{ target.type }}' as target_type,
-    {{ target.threads if target.threads else 1 }} as target_threads,
+    1 as target_threads,
     
     -- Performance metrics (to be populated by macros)
     null as execution_duration_seconds,
