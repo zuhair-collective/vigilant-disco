@@ -5,6 +5,9 @@
   )
 }}
 
+-- This model captures metadata about dbt model executions
+-- It's designed to be populated by the capture_model_metadata macro
+
 with model_executions as (
   select
     -- Multi-tenant identification
@@ -15,18 +18,18 @@ with model_executions as (
     '{{ invocation_id }}' as invocation_id,
     '{{ run_started_at }}' as run_started_at,
     
-    -- Model information
-    '{{ this.name }}' as model_name,
-    '{{ this.schema }}' as model_schema,
-    '{{ this.database }}' as model_database,
-    '{{ this.resource_type }}' as resource_type,
-    '{{ this.path }}' as model_path,
+    -- Model information (using safe references)
+    '{{ this.name if this.name else "unknown" }}' as model_name,
+    '{{ this.schema if this.schema else "unknown" }}' as model_schema,
+    '{{ this.database if this.database else "unknown" }}' as model_database,
+    '{{ this.resource_type if this.resource_type else "model" }}' as resource_type,
+    '{{ this.path if this.path else "unknown" }}' as model_path,
     
-    -- Execution details
-    '{{ this.config.materialized }}' as materialization_type,
+    -- Execution details (using safe references)
+    '{{ this.config.materialized if this.config and this.config.materialized else "table" }}' as materialization_type,
     '{{ target.name }}' as target_name,
     '{{ target.type }}' as target_type,
-    '{{ target.threads }}' as target_threads,
+    {{ target.threads }} as target_threads,
     
     -- Performance metrics (to be populated by macros)
     null as execution_duration_seconds,
@@ -34,12 +37,14 @@ with model_executions as (
     null as bytes_processed,
     
     -- Status
-    'running' as execution_status,
+    'pending' as execution_status,
     null as error_message,
     
     -- Additional metadata
     '{{ dbt_version }}' as dbt_version,
     '{{ project_name }}' as project_name
+    
+  where false  -- This ensures no rows are created until actual model execution metadata is captured
 )
 
 select * from model_executions 
