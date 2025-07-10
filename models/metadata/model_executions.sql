@@ -20,18 +20,18 @@ select
   '{{ invocation_id }}' as invocation_id,
   '{{ run_started_at }}' as run_started_at,
   
-  -- Model information
-  '{{ this.name if this.name else "unknown" }}' as model_name,
-  '{{ this.schema if this.schema else target.schema }}' as model_schema,
-  '{{ this.database if this.database else target.database }}' as model_database,
-  '{{ this.resource_type if this.resource_type else "model" }}' as resource_type,
-  '{{ this.path if this.path else "unknown" }}' as model_path,
+  -- Model information (simplified to avoid syntax errors)
+  '{{ this.name }}' as model_name,
+  '{{ this.schema }}' as model_schema,
+  '{{ this.database }}' as model_database,
+  '{{ this.resource_type }}' as resource_type,
+  '{{ this.path }}' as model_path,
   
-  -- Execution details
-  '{{ this.config.materialized if this.config and this.config.materialized else "table" }}' as materialization_type,
+  -- Execution details (simplified)
+  'table' as materialization_type,
   '{{ target.name }}' as target_name,
   '{{ target.type }}' as target_type,
-  {{ target.threads if target.threads else 1 }} as target_threads,
+  1 as target_threads,
   
   -- Performance metrics (placeholder - will be enhanced later)
   0 as execution_duration_seconds,
@@ -62,7 +62,7 @@ select
   'disabled' as materialization_type,
   '{{ target.name }}' as target_name,
   '{{ target.type }}' as target_type,
-  {{ target.threads if target.threads else 1 }} as target_threads,
+  1 as target_threads,
   null as execution_duration_seconds,
   null as rows_affected,
   null as bytes_processed,
