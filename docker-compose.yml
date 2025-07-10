@@ -1,0 +1,17 @@
+services:
+  dbtpackv2-test:
+    build: .
+    container_name: dbtpackv2-test
+    volumes:
+      # Mount the current directory for development
+      - .:/dbt/dbtpackv2
+      # Mount a directory for dbt logs and cache
+      - ./dbt-cache:/dbt/.dbt
+    environment:
+      - DBTPACKV2_API_TOKEN=test_token
+      # Add your BigQuery credentials here
+      - GOOGLE_APPLICATION_CREDENTIALS=/dbt/credentials/service-account-key.json
+    working_dir: /dbt/dbtpackv2
+    command: bash
+    stdin_open: true
+    tty: true 

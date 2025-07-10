@@ -1,0 +1,216 @@
+version: 2
+
+models:
+  - name: model_executions
+    description: "Tracks metadata about dbt model executions including timing, row counts, and performance metrics"
+    columns:
+      - name: customer_api_token
+        description: "API token for multi-tenant customer identification"
+        tests:
+          - not_null
+      
+      - name: execution_timestamp
+        description: "Timestamp when the execution metadata was captured"
+        tests:
+          - not_null
+      
+      - name: invocation_id
+        description: "Unique identifier for the dbt invocation"
+        tests:
+          - not_null
+      
+      - name: run_started_at
+        description: "Timestamp when the dbt run started"
+        tests:
+          - not_null
+      
+      - name: model_name
+        description: "Name of the dbt model"
+        tests:
+          - not_null
+      
+      - name: model_schema
+        description: "Database schema where the model is located"
+      
+      - name: model_database
+        description: "Database where the model is located"
+      
+      - name: resource_type
+        description: "Type of dbt resource (model, seed, etc.)"
+      
+      - name: model_path
+        description: "File path to the model definition"
+      
+      - name: materialization_type
+        description: "Type of materialization (table, view, incremental, etc.)"
+      
+      - name: target_name
+        description: "Name of the dbt target"
+      
+      - name: target_type
+        description: "Type of the dbt target (bigquery, snowflake, etc.)"
+      
+      - name: target_threads
+        description: "Number of threads used for execution"
+      
+      - name: execution_duration_seconds
+        description: "Duration of model execution in seconds"
+      
+      - name: rows_affected
+        description: "Number of rows affected by the model execution"
+      
+      - name: bytes_processed
+        description: "Number of bytes processed during execution (BigQuery specific)"
+      
+      - name: execution_status
+        description: "Status of the execution (success, failure, running)"
+      
+      - name: error_message
+        description: "Error message if execution failed"
+      
+      - name: dbt_version
+        description: "Version of dbt used for execution"
+      
+      - name: project_name
+        description: "Name of the dbt project"
+
+  - name: source_freshness_checks
+    description: "Tracks source freshness check results and metadata"
+    columns:
+      - name: customer_api_token
+        description: "API token for multi-tenant customer identification"
+        tests:
+          - not_null
+      
+      - name: check_timestamp
+        description: "Timestamp when the freshness check was performed"
+        tests:
+          - not_null
+      
+      - name: invocation_id
+        description: "Unique identifier for the dbt invocation"
+        tests:
+          - not_null
+      
+      - name: source_name
+        description: "Name of the source"
+        tests:
+          - not_null
+      
+      - name: source_table
+        description: "Name of the source table"
+        tests:
+          - not_null
+      
+      - name: source_schema
+        description: "Schema of the source table"
+      
+      - name: source_database
+        description: "Database of the source table"
+      
+      - name: warn_after
+        description: "Warning threshold in seconds"
+      
+      - name: error_after
+        description: "Error threshold in seconds"
+      
+      - name: filter
+        description: "Filter condition for freshness check"
+      
+      - name: max_loaded_at
+        description: "Most recent timestamp in the source table"
+      
+      - name: snapshotted_at
+        description: "Timestamp when the freshness check was performed"
+      
+      - name: max_loaded_at_time_ago_in_s
+        description: "Time difference between now and max_loaded_at in seconds"
+      
+      - name: freshness_status
+        description: "Status of the freshness check (pass, warn, error)"
+      
+      - name: target_name
+        description: "Name of the dbt target"
+      
+      - name: dbt_version
+        description: "Version of dbt used for execution"
+      
+      - name: project_name
+        description: "Name of the dbt project"
+
+  - name: test_results
+    description: "Tracks dbt test execution results and metadata"
+    columns:
+      - name: customer_api_token
+        description: "API token for multi-tenant customer identification"
+        tests:
+          - not_null
+      
+      - name: test_execution_timestamp
+        description: "Timestamp when the test was executed"
+        tests:
+          - not_null
+      
+      - name: invocation_id
+        description: "Unique identifier for the dbt invocation"
+        tests:
+          - not_null
+      
+      - name: test_name
+        description: "Name of the test"
+        tests:
+          - not_null
+      
+      - name: test_type
+        description: "Type of test (generic, singular, etc.)"
+      
+      - name: test_path
+        description: "File path to the test definition"
+      
+      - name: test_schema
+        description: "Schema where the test is defined"
+      
+      - name: test_database
+        description: "Database where the test is defined"
+      
+      - name: test_config
+        description: "Configuration of the test"
+      
+      - name: test_description
+        description: "Description of the test"
+      
+      - name: test_status
+        description: "Status of the test (pass, fail)"
+      
+      - name: test_result
+        description: "Result of the test execution"
+      
+      - name: test_failures
+        description: "Number of test failures"
+      
+      - name: test_warnings
+        description: "Number of test warnings"
+      
+      - name: model_name
+        description: "Name of the model being tested"
+      
+      - name: model_schema
+        description: "Schema of the model being tested"
+      
+      - name: model_database
+        description: "Database of the model being tested"
+      
+      - name: test_execution_duration_seconds
+        description: "Duration of test execution in seconds"
+      
+      - name: rows_checked
+        description: "Number of rows checked by the test"
+      
+      - name: target_name
+        description: "Name of the dbt target"
+      
+      - name: dbt_version
+        description: "Version of dbt used for execution"
+      
+      - name: project_name
+        description: "Name of the dbt project" 

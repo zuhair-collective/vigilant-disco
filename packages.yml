@@ -1,0 +1,2 @@
+# This file is intentionally empty for the dbtpackv2 package
+# When other projects install this package, they will reference it in their own packages.yml 
