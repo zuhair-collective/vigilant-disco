@@ -48,8 +48,7 @@ with test_results as (
     '{{ target.name }}' as target_name,
     '{{ dbt_version }}' as dbt_version,
     '{{ project_name }}' as project_name
-    
-  where false  -- This ensures no rows are created until actual tests are implemented
 )
 
-select * from test_results 
+-- Return empty result set for now - will be populated during actual test runs
+select * from test_results limit 0 

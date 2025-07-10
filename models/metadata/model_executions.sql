@@ -29,7 +29,7 @@ with model_executions as (
     '{{ this.config.materialized if this.config and this.config.materialized else "table" }}' as materialization_type,
     '{{ target.name }}' as target_name,
     '{{ target.type }}' as target_type,
-    {{ target.threads }} as target_threads,
+    {{ target.threads if target.threads else 1 }} as target_threads,
     
     -- Performance metrics (to be populated by macros)
     null as execution_duration_seconds,
@@ -43,8 +43,7 @@ with model_executions as (
     -- Additional metadata
     '{{ dbt_version }}' as dbt_version,
     '{{ project_name }}' as project_name
-    
-  where false  -- This ensures no rows are created until actual model execution metadata is captured
 )
 
-select * from model_executions 
+-- Return empty result set for now - will be populated by macros during actual execution
+select * from model_executions limit 0 

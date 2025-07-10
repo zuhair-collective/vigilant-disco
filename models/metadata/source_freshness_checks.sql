@@ -41,8 +41,7 @@ with source_freshness_checks as (
     '{{ target.name }}' as target_name,
     '{{ dbt_version }}' as dbt_version,
     '{{ project_name }}' as project_name
-    
-  where false  -- This ensures no rows are created until actual freshness checks are implemented
 )
 
-select * from source_freshness_checks 
+-- Return empty result set for now - will be populated during actual freshness checks
+select * from source_freshness_checks limit 0 
