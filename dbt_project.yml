@@ -1,0 +1,46 @@
+name: 'dbtpackv2'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'dbtpackv2'
+
+# These configurations specify where dbt should look for different types of files.
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+models:
+  dbtpackv2:
+    # Config indicated by + and applies to all files under models/example/
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      +materialized: table
+    metadata:
+      +materialized: table
+      +schema: metadata
+
+# Package configuration
+vars:
+  # API token for multi-tenant identification
+  api_token: "{{ env_var('DBTPACKV2_API_TOKEN', 'default_token') }}"
+  
+  # Target database configuration
+  target_database: "{{ target.database }}"
+  target_schema: "{{ target.schema }}"
+  
+  # Metadata collection settings
+  enable_model_metadata: true
+  enable_source_freshness_metadata: true
+  enable_test_metadata: true 
